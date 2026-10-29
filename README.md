@@ -4,6 +4,10 @@ A practical, Spring Boot developer–focused Docker handbook covering first-time
 
 > **Learning goal:** Be able to explain Docker clearly, containerize a Spring Boot application, run it with supporting services, troubleshoot common failures, and answer theory, practical, and scenario-based interview questions. This repository is a learning guide; verify commands against your installed Docker version and test destructive commands only with disposable data.
 
+## Current-version note
+
+Docker changes frequently. The version guide is date-stamped and links to official release notes; verify the live version before installing or updating. On 29 October 2026, Docker Desktop 4.97.0 was the latest release shown in Docker's official release notes.
+
 ## Start here
 
 1. [First-time setup on Windows](docs/01-first-time-setup-windows.md)
@@ -15,6 +19,7 @@ A practical, Spring Boot developer–focused Docker handbook covering first-time
 7. [Security, troubleshooting and production practices](docs/07-security-troubleshooting.md)
 8. [Interview questions, answers and scenarios](docs/08-interview-questions.md)
 9. [Practical labs and revision notes](docs/09-practical-labs-and-short-notes.md)
+10. [Docker version selection, compatibility and safe upgrades](docs/10-docker-version-and-upgrade.md)
 
 ## Learning path
 

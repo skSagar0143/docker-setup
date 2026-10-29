@@ -240,3 +240,99 @@ For scenario questions, answer in this order:
 7. Explain prevention (monitoring, tests, backups, security or deployment controls).
 
 Do not claim production experience if you have only done a local lab. Explain what you actually built and what you understand conceptually.
+
+## Additional current-version, build and operations questions
+
+### 71. Is Docker Desktop version the same as Docker Engine version?
+No. Docker Desktop is the Windows/macOS application and packages components including an Engine, CLI and Compose. Docker Engine is the container runtime/daemon. Check both client and server details with `docker version`.
+
+### 72. What Docker version should I install?
+Use the latest stable Docker Desktop release offered for your supported Windows system, after checking its official release notes and requirements. Avoid preview/test builds for a normal learning environment unless you specifically need to test them.
+
+### 73. What was the latest Docker Desktop release checked for this guide?
+On 29 October 2026, Docker's official release-notes page listed Docker Desktop 4.97.0, dated 26 October 2026. Updates roll out gradually, so a particular computer may not receive it immediately. Check the live official page rather than treating this note as permanently current.
+
+### 74. How do I update Docker Desktop safely?
+Check release notes, save work, back up important data, update through Docker Desktop or the official Windows installer, restart if requested, then verify `docker version`, `docker compose version`, and a test container.
+
+### 75. Is `docker-compose` the same as `docker compose`?
+`docker compose` is the modern Compose CLI plugin. `docker-compose` with a hyphen refers to the older standalone v1 command in many tutorials. Use the modern plugin for new learning unless a specific legacy environment requires otherwise.
+
+### 76. What is BuildKit?
+BuildKit is Docker's modern build backend. It supports efficient caching, parallel build steps, improved build features and secret/SSH mounts. Use current Docker build tooling and consult the Dockerfile/build documentation for supported syntax.
+
+### 77. What is Buildx?
+Buildx is a Docker CLI plugin that provides extended build capabilities, including BuildKit features and multi-platform builds. Check it with `docker buildx version`.
+
+### 78. What is a multi-platform image?
+An image reference that can provide platform-specific image variants, commonly for Linux AMD64 and ARM64. Buildx can build/publish multi-platform images when the builder and base images support them.
+
+### 79. What is an image digest?
+A content-addressed identifier for an image manifest or index. Tags can move; a digest identifies specific content and can improve deployment reproducibility.
+
+### 80. What is the difference between a tag and a digest?
+A tag is a human-readable name that may be reassigned. A digest is derived from content and is immutable for that content. Production deployments may pin digests when strict reproducibility is required.
+
+### 81. What is OCI?
+The Open Container Initiative defines open standards around container image formats, runtimes and distribution. OCI compatibility helps tools exchange container artifacts.
+
+### 82. What is containerd?
+A container runtime component used by Docker Engine to manage container lifecycle and related operations. It is one component in the overall Docker architecture, not a synonym for the Docker CLI or Docker Desktop.
+
+### 83. What is a health check?
+A configured test that reports whether a containerized service appears healthy. A running process may still be unhealthy; ensure the test matches the application's actual readiness and available tools.
+
+### 84. What is the difference between liveness and readiness?
+Liveness asks whether the process should remain running or be restarted; readiness asks whether it is ready to serve traffic. Docker health checks are not automatically a full orchestration readiness/liveness system.
+
+### 85. What is a restart policy?
+A rule such as `no`, `on-failure`, `always` or `unless-stopped` that controls when Docker restarts a container. It does not diagnose the root cause of a crash.
+
+### 86. What is rootless Docker?
+A mode where the daemon and containers run without root privileges, reducing certain risks. Availability and setup depend on the platform; do not assume Docker Desktop on Windows uses the same setup as a Linux rootless Engine.
+
+### 87. What is the Docker socket and why protect it?
+The Docker API socket grants powerful control over the daemon. Access can effectively provide host-level control in many configurations, so never expose it casually or mount it into untrusted containers.
+
+### 88. What is image scanning?
+Analyzing an image for known vulnerabilities and related issues. Scanning helps but does not prove an image is secure; keep dependencies patched and review findings in context.
+
+### 89. What is a software bill of materials (SBOM)?
+An inventory of software components in an artifact. It supports dependency visibility and vulnerability response. Use currently supported Docker or ecosystem tooling; commands can change across releases.
+
+### 90. How should secrets be passed to a container?
+Use an appropriate secret manager or deployment platform's secret mechanism. Avoid committing secrets to Git, baking them into image layers, or exposing them in logs. Environment variables can also leak through process inspection or diagnostics, so evaluate the threat model.
+
+### 91. Why should I pin base-image versions?
+Pinning a deliberate version improves repeatability and reviewability. Balance this with a regular update process so security fixes are not missed; digest pinning gives stronger immutability.
+
+### 92. How do you troubleshoot a build that cannot download dependencies?
+Check network/DNS/proxy settings, registry or package repository status, credentials, certificates, build logs and cache behavior. Retry only after identifying whether the issue is transient or configuration-related.
+
+### 93. Why use a non-root user in a Spring Boot image?
+It limits the privileges of the application process. Ensure the JAR, temporary directory and any writable paths have correct ownership and permissions.
+
+### 94. How do you keep a Docker image reproducible?
+Use a controlled build context, lock/pin dependencies where practical, pin base images, avoid mutable downloads, record image digests, and build/test through a consistent CI pipeline.
+
+### 95. How do you reduce attack surface?
+Use maintained minimal images, remove unnecessary packages, run as non-root, drop unneeded capabilities, avoid privileged mode, restrict network exposure, scan images and manage secrets safely.
+
+### 96. What is the difference between `docker stop` and `docker kill`?
+`docker stop` requests graceful shutdown and then forcibly terminates after a timeout. `docker kill` sends a signal (SIGKILL by default) immediately. Prefer graceful stop for stateful workloads.
+
+### 97. What is the difference between `docker rm` and `docker rmi`?
+`docker rm` removes containers; `docker image rm` (often called `docker rmi`) removes image references/layers when no longer in use. Neither is a substitute for deliberate volume management.
+
+### 98. Why is `docker system prune` risky?
+It removes unused Docker resources, and options such as `-a` or `--volumes` broaden what can be removed. Inspect disk usage first and read the exact command's help. Never run destructive cleanup commands blindly on a machine with important data.
+
+### 99. What should be checked after a Docker Desktop update?
+Verify client/server versions, Compose and Buildx versions, context, Engine health, required containers, published ports, mounted volumes and application logs. Run a small test container and validate important projects.
+
+### 100. Is Docker Desktop suitable for production servers?
+Docker Desktop is primarily a desktop development tool. For Linux servers, follow the official Docker Engine installation guidance for the supported distribution and your organization's security/operations requirements.
+
+### 101. Can every Docker interview question be listed?
+No. Interviewers can create unlimited variations. Learn the underlying concepts, commands, debugging workflow and trade-offs rather than memorizing a supposedly exhaustive list.
+

@@ -120,3 +120,33 @@ Stop unneeded containers; inspect images and volumes before deleting anything. D
 ## Uninstalling
 
 Uninstalling Docker Desktop and deleting Docker data are different operations. Read current official instructions first. Removing Docker's data can delete local images, containers and volumes. Back up anything important.
+
+## Version and update guidance (checked 29 October 2026)
+
+Docker Desktop and Docker Engine are different version numbers. The official Docker Desktop release notes currently list **Docker Desktop 4.97.0 (26 October 2026)** as the latest release shown. The same release history lists Docker Engine **29.9.2** in Docker Desktop 4.96.1. Component versions can differ between Desktop releases, and rollouts may be gradual, so verify what is offered to your machine.
+
+Official references:
+- Docker Desktop release notes: https://docs.docker.com/desktop/release-notes/
+- Windows installation and update instructions: https://docs.docker.com/desktop/setup/install/windows-install/
+- Docker Engine release notes: https://docs.docker.com/engine/release-notes/
+
+### Safely update Docker Desktop
+
+1. Check your current versions in PowerShell:
+   ```powershell
+   docker --version
+   docker version
+   docker compose version
+   docker buildx version
+   ```
+2. Open Docker Desktop and use its update notification / Check for updates option if available.
+3. If the update is not offered yet, use the official Windows installation page above. Download only from Docker's official domain.
+4. Read the release notes and requirements, save work, and stop important workloads gracefully before updating.
+5. Follow the installer prompts and restart Windows only if requested.
+6. Start Docker Desktop, wait for the Engine to run, and verify again with `docker version`, `docker compose version`, and `docker run --rm hello-world`.
+7. For important databases, back up data and verify the backup before any reinstall or reset.
+
+**Important:** On Docker Desktop, do not try to upgrade the embedded Docker Engine by installing a separate Linux Engine package inside Windows. Update Docker Desktop through its supported update/install path. A Docker CLI version alone does not prove the server/Engine is current; compare the Client and Server sections of `docker version`.
+
+For this learning repository, commands and concepts target current Docker CLI / Compose v2 workflows. Exact UI labels and bundled component versions may change. Prefer `docker compose` (the Compose plugin) rather than old standalone `docker-compose` v1 instructions found in older tutorials.
+
